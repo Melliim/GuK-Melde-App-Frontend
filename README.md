@@ -1,4 +1,4 @@
-# guk-melde-app-frontend
+# Guk-Melde-App-Frontend
 
 ## Project setup
 ```
