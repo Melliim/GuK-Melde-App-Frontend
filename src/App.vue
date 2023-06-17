@@ -1,14 +1,16 @@
 <template>
   <navbar></navbar>
+  <contact-form></contact-form>
   <router-view/>
 </template>
 
 <script>
 import Navbar from '@/components/Navbar.vue'
+import ContactForm from '@/components/ContactForm'
 
 export default {
   name: 'App',
-  components: { Navbar}
+  components: { ContactForm, Navbar}
 }
 </script>
 
