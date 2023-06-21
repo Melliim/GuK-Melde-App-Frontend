@@ -44,7 +44,7 @@
 <script>
 import emailjs from 'emailjs-com';
 export default {
-  name: "ContactUs",
+  name: "ContactForm",
   data() {
     return {
       name: "",
