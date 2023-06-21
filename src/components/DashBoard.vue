@@ -20,7 +20,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr v-for="km in krankmeldungen" :key="km.id">
+                <tr v-for="km in krankmeldungen" :key="km.id" >
                   <td v-if="km.mitarbeiter.sexIsFemale">Frau {{km.mitarbeiter.nachname}}</td>
                   <td v-else> Herr {{km.mitarbeiter.nachname}}</td>
                   <td v-if="km.enddatum == null">Unbestimmte Zeit</td>
@@ -28,11 +28,17 @@
                   <td v-if="km.mitarbeiter.abteilung == null">Über Vorgesetzter</td>
                   <td v-else-if="km.mitarbeiter.abteilung.boss.sexIsFemale">Frau {{km.mitarbeiter.abteilung.boss.nachname}}</td>
                   <td v-else>Herr {{km.mitarbeiter.vorgesetzer.nachname}}</td>
-                  <td v-if="km.bestatigt"></td>
+                  <td v-if="km.bestatigt"><p style="background-color: darkseagreen; padding: 1px; border-radius: 30px; font-size: 0.7rem; color: white">Bestätigt</p></td>
+                  <td v-else><p style="background-color: orangered; padding: 1px; border-radius: 30px; font-size: 0.7rem; color: white">Offen</p></td>
+                  <td v-if="!km.bestatigt">
+                    <a style="color: cornflowerblue; text-decoration: underline" @click="bestatigen(km)">bestätigen</a><br>
+                    <a style="color: cornflowerblue; text-decoration: underline">ablehnen</a>
+                  </td>
+                  <td v-else><a style="color: cornflowerblue; text-decoration: underline">einsehen</a></td>
+
                 </tr>
                 </tbody>
               </table>
-
             </div>
           </div>
         </div>
@@ -56,6 +62,27 @@ export default {
   },
   methods: {
 
+    bestatigen(km){
+
+      km.bestatigt = true;
+
+      fetch("http://localhost:8082/krankmeldung", {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(km)
+      })  .then(response => {
+        // Erfolgreiche Antwort
+        console.log(response);
+      })
+        .catch(error => {
+          // Fehlerbehandlung
+          console.error(error);
+        });
+
+      // window.location.reload()
+    }
   },
   props: {
     krankmeldungen: {
@@ -74,5 +101,8 @@ export default {
 
 <style>
 
+a{
+cursor: pointer;
+}
 
 </style>
