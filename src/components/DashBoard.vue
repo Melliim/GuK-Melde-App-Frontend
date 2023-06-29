@@ -32,7 +32,8 @@
                   <td v-else><p style="background-color: orangered; padding: 1px; border-radius: 30px; font-size: 0.7rem; color: white">Offen</p></td>
                   <td v-if="!km.bestatigt">
                     <a style="color: cornflowerblue; text-decoration: underline" @click="bestatigen(km)">bestätigen</a><br>
-                    <a style="color: cornflowerblue; text-decoration: underline">ablehnen</a>
+                    <a style="color: cornflowerblue; text-decoration: underline">ablehnen</a> <br>
+                  <a style="color: cornflowerblue; text-decoration: underline">einsehen</a>
                   </td>
                   <td v-else><a style="color: cornflowerblue; text-decoration: underline">einsehen</a></td>
 
