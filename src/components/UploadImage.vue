@@ -6,9 +6,9 @@
           <input
             type="file"
             accept="image/*"
-            ref="file"
+            ref="fileInput"
             @change="selectImage"
-            />
+          />
         </label>
       </div>
       <div class="col-4">
@@ -16,7 +16,7 @@
           class="btn btn-success btn-sm float-right"
           :disabled="!currentImage"
           @click="upload"
-          >
+        >
           Upload
         </button>
       </div>
@@ -29,7 +29,7 @@
         aria-valuemin="0"
         aria-valuemax="100"
         :style="{ width: progress + '%' }"
-        >
+      >
         {{ progress }}
       </div>
     </div>
@@ -42,23 +42,24 @@
     <div v-if="message" class="alert alert-secondary" role="alert">
       {{ message }}
     </div>
-    <div class="card mt-3">
-      <div class="card-header">List of Images</div>
-      <ul class="list-group list-group-flush">
-        <li
-          class="list-group-item"
-          v-for="(image, index) in imageInfos"
-          :key="index"
-          >
-          <a :href="image.url">{{ image.name }}</a>
-        </li>
-      </ul>
-    </div>
+    <!--    <div class="card mt-3">-->
+    <!--      <div class="card-header">List of Images</div>-->
+    <!--      <ul class="list-group list-group-flush">-->
+    <!--        <li-->
+    <!--          class="list-group-item"-->
+    <!--          v-for="(image, index) in imageInfos"-->
+    <!--          :key="index"-->
+    <!--          >-->
+    <!--          <a :href="image.url">{{ image.name }}</a>-->
+    <!--        </li>-->
+    <!--      </ul>-->
+    <!--    </div>-->
   </div>
 </template>
 
 <script>
 import UploadService from "../services/UploadFilesService";
+import ImageUploader from "../components/ImageUploader";
 
 export default {
   name: 'upload-image',
@@ -75,34 +76,19 @@ export default {
   },
   methods: {
     selectImage(){
-      this.currentImage = this.$refs.file.files.item(0);
+      this.currentImage = this.$refs.fileInput.files[0]; // Use this.$refs.fileInput.files instead of this.$refs.file.files
       this.previewImage = URL.createObjectURL(this.currentImage);
       this.progress = 0;
       this.message = "";
     },
     upload(){
-      this.progress = 0;
-      UploadService.upload(this.currentImage, (event) => {
-        this.progress = Math.round((100 * event.loaded) / event.total);
-      })
-        .then((response) => {
-          this.message = response.data.message;
-          return UploadService.getFiles();
-        })
-        .then((images) => {
-          this.imageInfos = images.data;
-        })
-        .catch((err) => {
-          this.progress = 0;
-          this.message = "Could not upload the image! " + err;
-          this.currentImage = undefined;
-        })
+      ImageUploader.methods.uploadImage.call(this);
     },
-    mounted(){
-      UploadService.getFiles().then(response => {
-        this.imageInfos = response.data;
-      })
-    }
+  },
+  mounted(){
+    UploadService.getFiles().then(response => {
+      this.imageInfos = response.data;
+    })
   }
 };
 </script>
@@ -110,3 +96,4 @@ export default {
 <style scoped>
 
 </style>
+

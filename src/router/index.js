@@ -1,13 +1,13 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import BoardView from '@/views/BoardView.vue'
 import LoginView from '@/views/LoginView.vue'
+import UploadView from '@/views/UploadView'
 
 const routes = [
   {
     path: '/upload',
-    name: 'home',
-    component: HomeView
+    name: 'upload',
+    component: UploadView
   }, {
   path: '/dashboard',
     name: 'dashboard',
@@ -16,7 +16,7 @@ const routes = [
   path: '/',
     name: 'login',
     component: LoginView
-  }
+  },
 ]
 
 const router = createRouter({
