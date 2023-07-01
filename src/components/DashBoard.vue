@@ -33,10 +33,11 @@
                   <td v-if="!km.bestatigt">
                     <a style="color: cornflowerblue; text-decoration: underline" @click="bestatigen(km)">bestätigen</a><br>
                     <a style="color: cornflowerblue; text-decoration: underline">ablehnen</a> <br>
-                  <a style="color: cornflowerblue; text-decoration: underline">einsehen</a>
+                  <a style="color: cornflowerblue; text-decoration: underline" @click="einblenden(km)">einsehen</a>
                   </td>
-                  <td v-else><a style="color: cornflowerblue; text-decoration: underline">einsehen</a></td>
+                  <td>
 
+                  </td>
                 </tr>
                 </tbody>
               </table>
@@ -45,10 +46,11 @@
         </div>
       </div>
     </div>
+
+    <img :src="img_url" v-if="!ausblenden">
+
   </section>
-  <div v-for="km in krankmeldungen" :key="km.id">
-  <p v-if="km.mitarbeiter.sexIsFemale">{{km.mitarbeiter.nachname}}</p>
-  </div>
+
 </template>
 
 
@@ -59,10 +61,17 @@ export default {
   name: 'DashBoard',
   components: {},
   data () {
-    return {}
+    return {
+      img_url: '',
+      ausblenden: true
+    }
   },
   methods: {
-
+    einblenden(krankmeldung){
+      this.img_url = krankmeldung.image
+      console.log(this.img_url)
+      this.ausblenden = false
+    },
     bestatigen(km){
 
       km.bestatigt = true;

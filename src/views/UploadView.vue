@@ -1,5 +1,5 @@
 <template>
-  <upload-image></upload-image>
+  <UploadImage></UploadImage>
 </template>
 
 <script>

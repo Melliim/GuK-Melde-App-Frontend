@@ -9,6 +9,8 @@ export default {
   name: "LoginView",
   components:{
     LoginForm
+  }, methods: {
+
   }
 }
 </script>

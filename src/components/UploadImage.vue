@@ -1,99 +1,124 @@
 <template>
-  <div>
-    <div class="row">
-      <div class="col-8">
-        <label class="btn btn-default p-0">
-          <input
-            type="file"
-            accept="image/*"
-            ref="fileInput"
-            @change="selectImage"
-          />
-        </label>
-      </div>
-      <div class="col-4">
-        <button
-          class="btn btn-success btn-sm float-right"
-          :disabled="!currentImage"
-          @click="upload"
-        >
-          Upload
-        </button>
-      </div>
-    </div>
-    <div v-if="currentImage" class="progress">
-      <div
-        class="progress-bar progress-bar-info"
-        role="progressbar"
-        :aria-valuenow="progress"
-        aria-valuemin="0"
-        aria-valuemax="100"
-        :style="{ width: progress + '%' }"
+  <div class="container">
+    <form >
+      <label>Mitarbeiter ID</label>
+      <input
+        type="text"
+        v-model="id"
+        name="id"
+        placeholder="Mitarbeiter ID"
       >
-        {{ progress }}
-      </div>
-    </div>
-    <div v-if="previewImage">
-      <div>
-        <img class="preview my-3" :src="previewImage" alt="" />
-      </div>
-    </div>
 
-    <div v-if="message" class="alert alert-secondary" role="alert">
-      {{ message }}
-    </div>
-    <!--    <div class="card mt-3">-->
-    <!--      <div class="card-header">List of Images</div>-->
-    <!--      <ul class="list-group list-group-flush">-->
-    <!--        <li-->
-    <!--          class="list-group-item"-->
-    <!--          v-for="(image, index) in imageInfos"-->
-    <!--          :key="index"-->
-    <!--          >-->
-    <!--          <a :href="image.url">{{ image.name }}</a>-->
-    <!--        </li>-->
-    <!--      </ul>-->
-    <!--    </div>-->
+    </form>
+  </div>
+
+  <div>
+    <input type="file" @change="handleFileSelect">
+  </div>
+
+
+  <div>
+    <button @click="doRequest">Absenden</button>
   </div>
 </template>
 
+
 <script>
-import UploadService from "../services/UploadFilesService";
-import ImageUploader from "../components/ImageUploader";
 
 export default {
-  name: 'upload-image',
-  data(){
-    return{
-      currentImage: undefined,
-      previewImage: undefined,
+  name: "UploadFile",
+  data() {
+    return {
+      uploadedFile: null,
+      id: 0
 
-      progress: 0,
-      message: "",
-
-      imageInfos: [],
     };
   },
   methods: {
-    selectImage(){
-      this.currentImage = this.$refs.fileInput.files[0]; // Use this.$refs.fileInput.files instead of this.$refs.file.files
-      this.previewImage = URL.createObjectURL(this.currentImage);
-      this.progress = 0;
-      this.message = "";
-    },
-    upload(){
-      ImageUploader.methods.uploadImage.call(this);
-    },
-  },
-  mounted(){
-    UploadService.getFiles().then(response => {
-      this.imageInfos = response.data;
-    })
+
+      handleFileSelect(event) {
+        const file = event.target.files[0];
+        const reader = new FileReader();
+
+        reader.onload = () => {
+          // eslint-disable-next-line no-unused-vars
+          const base64String = reader.result;
+          this.uploadedFile = base64String
+        };
+
+        reader.readAsDataURL(file);
+      }, doRequest(){
+        if (this.uploadedFile == undefined || this.id == 0) {
+          console.log(this.uploadedFile)
+          console.log(this.id)
+        } else {
+
+          let data = {
+          mitarbeiter: {
+            id: this.id
+          },
+          lohnfortzahlug: false,
+          bestatigt: false,
+            image: this.uploadedFile
+          }
+
+          const requestOptions = {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            redirect: 'follow',
+            body: JSON.stringify(data)
+
+          }
+          fetch("http://localhost:8082/krankmeldung", requestOptions)
+            .catch(error => {
+              console.error(error);
+            });
+        }
+
+}
   }
 };
 </script>
+<style>
+* {box-sizing: border-box;}
 
-<style scoped>
+.container {
+  display: block;
+  margin:auto;
+  text-align: center;
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 50%;
+}
 
+label {
+  float: left;
+}
+
+input[type=text], [type=email], [type=text], [type=text], [type=date] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #4CAF50;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
 </style>
-

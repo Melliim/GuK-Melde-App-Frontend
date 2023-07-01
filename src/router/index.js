@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import BoardView from '@/views/BoardView.vue'
 import LoginView from '@/views/LoginView.vue'
 import UploadView from '@/views/UploadView'
+import ContactForm from '@/components/ContactForm.vue'
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     name: 'login',
     component: LoginView
   },
+  {
+    path: "/contact",
+    name: 'contact',
+    component: ContactForm
+  }
 ]
 
 const router = createRouter({

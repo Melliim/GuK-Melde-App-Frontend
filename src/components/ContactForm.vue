@@ -39,6 +39,11 @@
       <input type="submit" value="Send">
     </form>
   </div>
+
+  <div>
+    <input type="file" @change="handleFileSelect">
+  </div>
+
 </template>
 
 <script>
@@ -55,6 +60,27 @@ export default {
     };
   },
   methods: {
+     handleFileSelect(event) {
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = async () => {
+        const base64String = reader.result;
+        await this.doPutRequest(base64String)
+      };
+
+      reader.readAsDataURL(file);
+    }, doPutRequest(data){
+      const requestOptions = {
+        method: 'PUT',
+        redirect: 'follow',
+        body: JSON.stringify(data)
+
+      }
+      fetch("https://localhost:8082/uploadImage", requestOptions)
+
+
+    },
     sendEmail(event) {
       event.preventDefault(); // Prevent the form from submitting normally
       emailjs
