@@ -3,6 +3,7 @@ import BoardView from '@/views/BoardView.vue'
 import LoginView from '@/views/LoginView.vue'
 import UploadView from '@/views/UploadView'
 import ContactForm from '@/components/ContactForm.vue'
+import FaceId from '@/components/FaceId.vue'
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
     path: "/contact",
     name: 'contact',
     component: ContactForm
+  },
+  {
+  path: '/face',
+    name: 'face',
+    component: FaceId
   }
 ]
 
