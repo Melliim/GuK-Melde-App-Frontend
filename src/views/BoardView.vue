@@ -1,7 +1,9 @@
 <template>
-
-  <DashBoard :krankmeldungen="krankmeldungen" :employees="employees"></DashBoard>
-
+  <div class="board-view">
+    <div class="container">
+    <DashBoard :krankmeldungen="krankmeldungen" :employees="employees"></DashBoard>
+    </div>
+  </div>
 </template>
 
 
@@ -53,6 +55,9 @@ export default {
 
 
 <style>
+.board-view {
+  background-color: #4f74c4;
 
+}
 
 </style>

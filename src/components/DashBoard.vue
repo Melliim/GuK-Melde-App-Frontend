@@ -1,10 +1,10 @@
 <template>
 
-  <section class="vh-100" style="background-color: #eee;" >
-    <div  >
+  <section class="vh-100" >
+    <div >
       <div class="row justify-content-center align-items-center " >
         <div class="col col-lg-9  ">
-          <div class="card rounded-3" >
+          <div class="card rounded-3 custom-card mt-5" >
             <div class="card-body p-4">
 
               <h4 class="text-center my-3 pb-3">Übersicht</h4>
@@ -46,9 +46,9 @@
       </div>
     </div>
   </section>
-  <div v-for="km in krankmeldungen" :key="km.id">
-  <p v-if="km.mitarbeiter.sexIsFemale">{{km.mitarbeiter.nachname}}</p>
-  </div>
+<!--  <div v-for="km in krankmeldungen" :key="km.id">-->
+<!--  <p v-if="km.mitarbeiter.sexIsFemale">{{km.mitarbeiter.nachname}}</p>-->
+<!--  </div>-->
 </template>
 
 

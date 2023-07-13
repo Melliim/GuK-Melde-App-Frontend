@@ -98,13 +98,15 @@ export default {
   margin:auto;
   text-align: center;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #343a40;
   padding: 20px;
   width: 50%;
 }
 
 label {
   float: left;
+  color: #fff;
+
 }
 
 input[type=text], [type=email], [type=text], [type=text], [type=date] {
@@ -130,4 +132,6 @@ input[type=submit] {
 input[type=submit]:hover {
   background-color: #45a049;
 }
+
+
 </style>

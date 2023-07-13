@@ -1,5 +1,7 @@
 <template>
-  <LoginForm></LoginForm>
+  <div class="login-view">
+    <LoginForm></LoginForm>
+  </div>
 </template>
 
 <script>
@@ -12,3 +14,9 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.login-view {
+  background-color: #4f74c4;
+}
+</style>
