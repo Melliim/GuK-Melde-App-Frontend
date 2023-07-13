@@ -10,7 +10,7 @@
 
                 <h2 class="fw-bold mb-2 text-uppercase">Login</h2>
                 <p class="text-white-50 mb-5">Please enter your login and password!</p>
-
+      <face-id></face-id> <br>
                 <div class="form-outline form-white mb-4">
                   <input type="email" id="typeEmailX" class="form-control form-control-lg" v-model="email" @keyup.enter="login()"/>
                   <label class="form-label" for="typeEmailX">Email</label>
@@ -36,6 +36,8 @@
 </template>
 
 <script>
+import FaceId from '@/components/FaceId.vue'
+
 export default {
   name: "LoginForm",
   data(){
@@ -44,6 +46,7 @@ export default {
       password: ''
     }
   }, components: {
+    FaceId
 
   }, methods: {
     login(){
