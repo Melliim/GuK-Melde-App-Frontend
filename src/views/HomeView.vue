@@ -2,7 +2,6 @@
   <div class="home-view">
     <div class="container">
     <div class="flex-container">
-      <contact-form></contact-form>
       <UploadImage></UploadImage>
     </div>
     </div>
@@ -11,14 +10,12 @@
 
 <script>
 
-import ContactForm from '@/components/ContactForm.vue'
 import UploadImage from '@/components/UploadImage.vue'
 
 export default {
   name: 'HomeView',
   components: {
     UploadImage,
-    ContactForm,
 
   }, mounted () {
   }
