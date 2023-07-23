@@ -1,24 +1,23 @@
 <template>
-  <div class="container">
+  <div class="container" >
     <form >
-      <label>Mitarbeiter ID</label>
-      <input
-        type="text"
-        v-model="id"
-        name="id"
-        placeholder="Mitarbeiter ID"
-      >
+      <p>Mitarbeiter-ID: {{id}}</p>
 
     </form>
   </div>
 
-  <div>
+  <div style="display: flex" >
     <input type="file" @change="handleFileSelect">
+    <button @click="doRequest">Absenden</button>
   </div>
 
 
   <div>
-    <button @click="doRequest">Absenden</button>
+
+  </div>
+
+  <div class="container">
+    <button @click="gesundMelden()">Gesundmelden</button>
   </div>
 </template>
 
@@ -30,13 +29,16 @@ export default {
   data() {
     return {
       uploadedFile: null,
-      id: 1
+      id: 3
 
     };
   },
   methods: {
 
-    handleFileSelect(event) {
+    gesundMelden(){
+      //TODO: delete km implementieren
+
+    }, handleFileSelect(event) {
       const file = event.target.files[0];
       const reader = new FileReader();
 

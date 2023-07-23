@@ -52,8 +52,8 @@ export default {
 
   }, methods: {
     login(){
-      let personalData = ["pa@guk.de", "pa_password"]
-      let userData = ["mitarbeiter@guk.de", "us_password"]
+      let personalData = ["pa", "password"]
+      let userData = ["mitarbeiter", "password"]
 
       if (this.email == (personalData[0])) {
         if (this.password == (personalData[1])){

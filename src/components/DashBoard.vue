@@ -15,6 +15,7 @@
                   <th scope="col">Name</th>
                   <th scope="col">Abwesend bis</th>
                   <th scope="col">Vorgesetzer</th>
+                  <th scope="col">Lohnfortzahlung</th>
                   <th scope="col">Status</th>
                   <th scope="col">Actions</th>
                 </tr>
@@ -25,17 +26,19 @@
                   <td v-else> Herr {{km.mitarbeiter.nachname}}</td>
                   <td v-if="km.enddatum == null">Unbestimmte Zeit</td>
                   <td v-else>{{km.enddatum}}</td>
-                  <td v-if="km.mitarbeiter.abteilung == null">Über Vorgesetzter</td>
+                  <td v-if="km.mitarbeiter.abteilung == null">Frau Dalow</td>
                   <td v-else-if="km.mitarbeiter.abteilung.boss.sexIsFemale">Frau {{km.mitarbeiter.abteilung.boss.nachname}}</td>
                   <td v-else>Herr {{km.mitarbeiter.vorgesetzer.nachname}}</td>
+                  <td v-if="km.lohnfortzahlung">eingeleitet</td>
+                  <td v-else>---</td>
                   <td v-if="km.bestatigt"><p style="background-color: darkseagreen; padding: 1px; border-radius: 30px; font-size: 0.7rem; color: white">Bestätigt</p></td>
                   <td v-else><p style="background-color: orangered; padding: 1px; border-radius: 30px; font-size: 0.7rem; color: white">Offen</p></td>
                   <td v-if="!km.bestatigt">
                     <a style="color: cornflowerblue; text-decoration: underline" @click="bestatigen(km)">bestätigen</a><br>
-                    <a style="color: cornflowerblue; text-decoration: underline">ablehnen</a> <br>
-                  <a style="color: cornflowerblue; text-decoration: underline" @click="einblenden(km)">einsehen</a>
-                  </td>
+                    <a style="color: cornflowerblue; text-decoration: underline" @click="ablehnen(km)">ablehnen</a> <br>
 
+                  </td>
+<td><a style="color: cornflowerblue; text-decoration: underline" @click="einblenden(km)">einsehen</a></td>
                 </tr>
                 </tbody>
               </table>
@@ -45,13 +48,10 @@
       </div>
     </div>
 
-    <img :src="img_url" v-if="!ausblenden">
+    <img :src="img_url" v-if="!ausblenden" style="max-height: 30vh">
 
 
   </section>
-<!--  <div v-for="km in krankmeldungen" :key="km.id">-->
-<!--  <p v-if="km.mitarbeiter.sexIsFemale">{{km.mitarbeiter.nachname}}</p>-->
-<!--  </div>-->
 </template>
 
 
@@ -76,6 +76,19 @@ export default {
 
     bestatigen(km){
 
+      const requestOptions = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'text/plain'
+        },
+        redirect: 'follow',
+      }
+      fetch("http://localhost:8082/send-vor", requestOptions)
+        .catch(error => {
+          console.error(error);
+        });
+
+
       km.bestatigt = true;
 
       fetch("http://localhost:8082/krankmeldung", {
@@ -94,6 +107,17 @@ export default {
         });
 
       // window.location.reload()
+    }, ablehnen(km) {
+      fetch("http://localhost:8082/krankmeldung/"+km.id, {
+        method: 'Delete'
+      }).then(response => {
+        // Erfolgreiche Antwort
+        console.log(response);
+      })
+        .catch(error => {
+          // Fehlerbehandlung
+          console.error(error);
+        });
     }
   },
   props: {
