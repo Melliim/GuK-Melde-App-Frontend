@@ -1,14 +1,15 @@
 <template>
-  <div class="container" >
+  <div class="UpIm-page-container">
+  <div class="UpIm-container" >
     <form >
       <p>Mitarbeiter-ID: {{id}}</p>
 
     </form>
   </div>
 
-  <div style="display: flex" >
+  <div>
     <input type="file" @change="handleFileSelect">
-    <button @click="doRequest">Absenden</button>
+    <button @click="doRequest" class="absende-button">Krankmelden</button>
   </div>
 
 
@@ -16,8 +17,9 @@
 
   </div>
 
-  <div class="container">
-    <button @click="gesundMelden()">Gesundmelden</button>
+  <div>
+    <button @click="gesundMelden()" class="gesundmelde-button">Gesundmelden</button>
+  </div>
   </div>
 </template>
 
@@ -86,14 +88,33 @@ export default {
 <style>
 * {box-sizing: border-box;}
 
-.container {
-  display: block;
-  margin:auto;
+
+.UpIm-page-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   text-align: center;
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: #ffffff;
   padding: 20px;
-  width: 50%;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+
+}
+
+.UpIm-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 60px ;
+  text-align: center;
+  border-radius: 10px;
+  background-color: #f2f2f2;
+  padding: 10px 15px;
+  max-width: 200px ;
 }
 
 label {
@@ -122,5 +143,35 @@ input[type=submit] {
 
 input[type=submit]:hover {
   background-color: #45a049;
+}
+
+.absende-button {
+  margin-top: 20px;
+  background-color: #e74c3c;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 7px 15px;
+  cursor: pointer;
+  margin-left: 30px;
+}
+
+.absende-button:hover {
+  background-color: #880808;
+}
+
+.gesundmelde-button {
+  margin-top: 80px;
+  margin-bottom: 20px;
+  background-color: #35c73a;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.gesundmelde-button:hover {
+  background-color: #2b8c2e;
 }
 </style>
